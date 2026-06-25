@@ -1,0 +1,6 @@
+{
+  "name": "Digital Circus: Último Acto",
+  "description": "Una experiencia 3D inmersiva inspirada en The Amazing Digital Circus, con soporte adaptativo y simulador para la tablet Redmi Pad SE 8.7.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
