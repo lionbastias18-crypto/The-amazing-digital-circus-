@@ -832,12 +832,35 @@ export default function Player() {
               <coneGeometry args={[0.08, 0.35, 8]} />
               <meshStandardMaterial color="#4e342e" />
             </mesh>
+
+            {/* Flequillo frontal 3D (Bangs) inspirado en la imagen */}
+            <mesh position={[-0.08, 0.15, 0.23]} rotation={[0.2, 0.1, -0.1]}>
+              <boxGeometry args={[0.12, 0.12, 0.05]} />
+              <meshStandardMaterial color="#4e342e" roughness={0.9} />
+            </mesh>
+            <mesh position={[0.08, 0.15, 0.23]} rotation={[0.2, -0.1, 0.1]}>
+              <boxGeometry args={[0.12, 0.12, 0.05]} />
+              <meshStandardMaterial color="#4e342e" roughness={0.9} />
+            </mesh>
+            <mesh position={[-0.18, 0.08, 0.22]} rotation={[0.1, 0.1, -0.05]}>
+              <boxGeometry args={[0.08, 0.15, 0.05]} />
+              <meshStandardMaterial color="#4e342e" roughness={0.9} />
+            </mesh>
+            <mesh position={[0.18, 0.08, 0.22]} rotation={[0.1, -0.1, 0.05]}>
+              <boxGeometry args={[0.08, 0.15, 0.05]} />
+              <meshStandardMaterial color="#4e342e" roughness={0.9} />
+            </mesh>
           </group>
 
           {/* Rostro Interactivo según EMOCIONES */}
           <group position={[0, 0, 0.25]}>
-            {/* Ojos Gigantes Anhelantes (Pinwheels rojos y azules como la imagen) */}
+            {/* Ojos Gigantes Anhelantes (Pinwheels de la imagen con delineado negro) */}
             <group position={[-0.11, 0.02, 0]}>
+              {/* Contorno / Delineado negro alrededor del ojo */}
+              <mesh position={[0, 0, -0.005]}>
+                <circleGeometry args={[0.098, 32]} />
+                <meshBasicMaterial color="#000000" />
+              </mesh>
               <mesh>
                 <sphereGeometry args={[0.09, 16, 16]} />
                 <meshBasicMaterial color="#ffffff" />
@@ -847,15 +870,16 @@ export default function Player() {
                 <circleGeometry args={[0.05, 16]} />
                 <meshBasicMaterial color={pomniEmotion === 'enojo' ? '#d32f2f' : '#0288d1'} />
               </mesh>
-              {/* Aspas de la rueda pinwheel cruzadas */}
-              <mesh position={[0, 0, 0.066]} rotation={[0, 0, Math.PI / 4]}>
-                <boxGeometry args={[0.08, 0.02, 0.002]} />
-                <meshBasicMaterial color={pomniEmotion === 'enojo' ? '#ffeb3b' : '#d32f2f'} />
-              </mesh>
-              <mesh position={[0, 0, 0.067]} rotation={[0, 0, -Math.PI / 4]}>
-                <boxGeometry args={[0.02, 0.08, 0.002]} />
-                <meshBasicMaterial color={pomniEmotion === 'enojo' ? '#ffeb3b' : '#d32f2f'} />
-              </mesh>
+              {/* Aspas de la rueda pinwheel cruzadas para formar 8 sectores alternantes */}
+              {Array.from({ length: 4 }).map((_, idx) => {
+                const angle = (idx * Math.PI) / 4;
+                return (
+                  <mesh key={`l-spoke-${idx}`} position={[0, 0, 0.066]} rotation={[0, 0, angle]}>
+                    <boxGeometry args={[0.1, 0.02, 0.002]} />
+                    <meshBasicMaterial color={pomniEmotion === 'enojo' ? '#ffeb3b' : '#d32f2f'} />
+                  </mesh>
+                );
+              })}
               {/* Pupila negra central */}
               <mesh position={[0, 0, 0.068]}>
                 <circleGeometry args={[0.015, 12]} />
@@ -864,6 +888,11 @@ export default function Player() {
             </group>
             
             <group position={[0.11, 0.02, 0]}>
+              {/* Contorno / Delineado negro alrededor del ojo */}
+              <mesh position={[0, 0, -0.005]}>
+                <circleGeometry args={[0.098, 32]} />
+                <meshBasicMaterial color="#000000" />
+              </mesh>
               <mesh>
                 <sphereGeometry args={[0.09, 16, 16]} />
                 <meshBasicMaterial color="#ffffff" />
@@ -871,23 +900,34 @@ export default function Player() {
               {/* Iris/Windmill */}
               <mesh position={[0, 0, 0.065]}>
                 <circleGeometry args={[0.05, 16]} />
-                <meshBasicMaterial color={pomniEmotion === 'enojo' ? '#d32f2f' : '#d32f2f'} />
+                <meshBasicMaterial color={pomniEmotion === 'enojo' ? '#0288d1' : '#d32f2f'} />
               </mesh>
-              {/* Aspas de la rueda pinwheel cruzadas */}
-              <mesh position={[0, 0, 0.066]} rotation={[0, 0, Math.PI / 4]}>
-                <boxGeometry args={[0.08, 0.02, 0.002]} />
-                <meshBasicMaterial color={pomniEmotion === 'enojo' ? '#ffeb3b' : '#0288d1'} />
-              </mesh>
-              <mesh position={[0, 0, 0.067]} rotation={[0, 0, -Math.PI / 4]}>
-                <boxGeometry args={[0.02, 0.08, 0.002]} />
-                <meshBasicMaterial color={pomniEmotion === 'enojo' ? '#ffeb3b' : '#0288d1'} />
-              </mesh>
+              {/* Aspas de la rueda pinwheel cruzadas para formar 8 sectores alternantes */}
+              {Array.from({ length: 4 }).map((_, idx) => {
+                const angle = (idx * Math.PI) / 4;
+                return (
+                  <mesh key={`r-spoke-${idx}`} position={[0, 0, 0.066]} rotation={[0, 0, angle]}>
+                    <boxGeometry args={[0.1, 0.02, 0.002]} />
+                    <meshBasicMaterial color={pomniEmotion === 'enojo' ? '#ffeb3b' : '#0288d1'} />
+                  </mesh>
+                );
+              })}
               {/* Pupila negra central */}
               <mesh position={[0, 0, 0.068]}>
                 <circleGeometry args={[0.015, 12]} />
                 <meshBasicMaterial color="#000000" />
               </mesh>
             </group>
+
+            {/* Mejillas Rosadas (Blush) adorables bajo los ojos */}
+            <mesh position={[-0.17, -0.1, 0.04]} scale={[1, 0.65, 0.1]}>
+              <sphereGeometry args={[0.04, 16, 16]} />
+              <meshBasicMaterial color="#e91e63" transparent opacity={0.65} />
+            </mesh>
+            <mesh position={[0.17, -0.1, 0.04]} scale={[1, 0.65, 0.1]}>
+              <sphereGeometry args={[0.04, 16, 16]} />
+              <meshBasicMaterial color="#e91e63" transparent opacity={0.65} />
+            </mesh>
 
             {/* Cejas Dinámicas */}
             {pomniEmotion === 'felicidad' && (
@@ -971,6 +1011,12 @@ export default function Player() {
             <mesh>
               <cylinderGeometry args={[0.32, 0.32, 0.1, 16, 1, false, 0, Math.PI]} />
               <meshStandardMaterial color="#2196f3" roughness={0.4} />
+            </mesh>
+
+            {/* Borde Amarillo Brillante de la base del sombrero (Brim de bufón) */}
+            <mesh position={[0, -0.05, 0]} rotation={[Math.PI / 2, 0, 0]}>
+              <torusGeometry args={[0.315, 0.025, 8, 32]} />
+              <meshStandardMaterial color="#ffd54f" roughness={0.3} />
             </mesh>
             
             {/* Punta Izquierda Caída (Roja) */}
